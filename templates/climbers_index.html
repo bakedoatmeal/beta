@@ -5,10 +5,10 @@
     <div class='row mt-5'>
         <div class="col">
             <div class='card border-light ml-5 mb-4' style="max-width: 50vw;">
-                <div class="card-header d-flex">
+                <div class="card-header d-flex pb-2 pt-1">
                 {% for climber in climbers %}
                 <div class='d-flex flex-column justify-content-center' style='max-width: 80px;'>
-                    <a href='/climbers/{{ climber._id }}' class='ml-2 mr-2'><img src="{{ url_for('file', filename=climber['profile-photo']) }}" style='height: 50px; width: 50px; border-radius: 25px;'/></a>
+                    <a href='/climbers/{{ climber._id }}' class='ml-2 mr-2 mt-2'><img src="{{ url_for('file', filename=climber['profile-photo']) }}" style='height: 50px; width: 50px; border-radius: 25px;'/></a>
                     <p style='font-size: 14px;' >
                         {% if climber.username|length > 10 %}
                             user
