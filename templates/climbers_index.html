@@ -5,7 +5,8 @@
     <div class='row mt-5'>
         <div class="col">
             <div class='card border-light ml-5 mb-4' style="max-width: 50vw;">
-                <div class="card-header d-flex pb-2 pt-1">
+                <div class='card-header'>Climbers</div>
+                <div class="card-body d-flex pb-2 pt-1">
                 {% for climber in climbers %}
                 <div class='d-flex flex-column justify-content-center' style='max-width: 80px;'>
                     <a href='/climbers/{{ climber._id }}' class='ml-2 mr-2 mt-2'><img src="{{ url_for('file', filename=climber['profile-photo']) }}" style='height: 50px; width: 50px; border-radius: 25px;'/></a>
@@ -29,6 +30,7 @@
 
         <div class='col' style='margin-top: 14vh;'>
             <div class='card'>
+            <div class="card-header">Gyms</div>
             {% for gym in gyms %}
             
                 <div class='d-flex align-items-center pt-3 pb-3 pl-3 pr-3'>
