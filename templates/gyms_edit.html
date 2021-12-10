@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method='POST' action='/gyms/{{gym._id}}'>
+    <fieldset>
+        <legend>Edit Gym</legend>
+        <!-- TITLE -->
+        <p>
+            <label for='name'>Gym Name</label><br>
+            <input type='text' name='name' class="form-control" value={{gym.name}}/>
+        </p>
+        <p>
+            <label for='city'>City</label>
+            <input type='text' name='city' class='form-control' value={{gym.city}}/>
+        </p>
+        <p>
+            <label for='type'>Climbing Types</label><br>
+            <fieldset>
+                <legend>Please select the type(s) of climbing available at the gym:</legend>
+                <input type="checkbox" name="type" value="bouldering" /><label for="bouldering"> Bouldering</label><br />
+                <input type="checkbox" name="type" value="lead"  /><label for="lead"> Lead</label><br />
+                <input type="checkbox" name="type" value="toprope" /><label for="toprope"> Top Rope</label><br />
+          </fieldset>
+        </p>
+        <p>
+            <label for='description'>Description</label>
+            <textarea type='text' name='description' class='form-control'>{{gym.description}}</textarea>
+        </p>
+    </fieldset>
+
+    <!-- BUTTON -->
+    <p>
+        <button type='submit'>Update Gym</button>
+    </p>
+</form>
+{% endblock %}

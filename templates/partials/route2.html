@@ -1,0 +1,9 @@
+<div class='card border-light mb-3 ml-5' style="max-width: 50vw; padding: 0">  
+    <div class='card-header pt-3 pb-3'> 
+        <img class='mr-2' src='../../static/climberprofile.jpeg' style='height: 30px; width: 30px; border-radius: 15px;'/> 
+        {{ climb.username }} 
+    </div>
+    <img src="{{ url_for('file', filename=climb['photo_video_name']) }}">
+    <p class='card-text ml-3 mt-3 mb-1'>Grade: {{ climb.grade }}</p>
+    <p class='card-text ml-3 mt-0 mb-3'>Added on: {{ climb.date }}</p>
+</div>

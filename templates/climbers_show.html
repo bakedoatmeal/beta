@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href='/' class='mt-3 mb-5 pt-4 pb-2' style="text-decoration: none;">Back to Home</a>
+
+<div class='row' style="margin: 30px 0 30px 0;"> 
+    <h1 class='mt-4 mb-2'>{{ climber.username }}</h1>
+    <p>Full name: {{ climber.fullname }}</p>
+    <p>Level: {{climber.level}}</p>
+    {% for gym in gyms %}
+        {% if gym._id == climber.homegym %}
+            <p class="card-text">Home gym: {{ gym.name}}</p>
+        {% endif %}
+    {% endfor %}
+
+</div>
+
+<h1 class='mx-auto mb-3'>Latest Sends (Completed Climbs)</h1> 
+<div class="row">
+{% for climb in climbs %}
+    {% include 'partials/route.html' %}
+{% endfor %}
+</div>
+
+
+<section style="margin: 60px 0 60px 0;">
+{% include 'partials/route_form.html' %}
+</section>
+
+<p class='col'>
+    <form method='POST' action='/climbers/{{ climber._id }}/delete'>
+        <button class='btn btn-primary' type='submit'>Delete climber</button>
+    </form>
+</p>
+
+{% endblock %}

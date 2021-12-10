@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class='row mt-5'>
+        <div class="col">
+            <div class='card border-light ml-5 mb-4' style="max-width: 50vw;">
+                <div class="card-header d-flex">
+                {% for climber in climbers %}
+                <div class='d-flex flex-column justify-content-center' style='max-width: 80px;'>
+                    <a href='/climbers/{{ climber._id }}' class='ml-2 mr-2'><img src="{{ url_for('file', filename=climber['profile-photo']) }}" style='height: 50px; width: 50px; border-radius: 25px;'/></a>
+                    <p style='font-size: 14px;' >
+                        {% if climber.username|length > 10 %}
+                            user
+                        {% else %}
+                        {{ climber.username }}
+                        {% endif %}
+                    </p>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+
+            {% for climb in climbs %}
+                {% include 'partials/route2.html' %}
+            {% endfor %}
+
+        </div>
+
+        <div class='col' style='margin-top: 14vh;'>
+            <div class='card'>
+            {% for gym in gyms %}
+            
+                <div class='d-flex align-items-center pt-3 pb-3 pl-3 pr-3'>
+                    <a href='/gyms/{{gym._id}}' class='pr-3 pb-0 mb-0'><img src='../static/gymicon.png' style='height: 50px; width: 50px; border-radius: 25px;'/></a>
+                    <div>
+                        <a href='/gyms/{{gym._id}}' style='font-size: 14px; text-decoration: none;' class='mb-0 mt-1 pb-0'>{{gym.name}}</p>
+                        <p style='font-size: 14px;' class='mt-0 pt-0'>{{gym.city}}</p>
+                    </div>
+
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

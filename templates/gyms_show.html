@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/'>Back to Home</a>
+<h1 class='mt-4 mb-2'>{{ gym.name }}</h1>
+
+<section>
+    <h2 class='mb-3 mt-3'>Description</h2>
+    <p>{{ gym.description }}</p>
+</section>
+
+<p>Located in: {{gym.city}}</p>
+<p>Types of climbing available: {{gym.types}}</p>
+
+<p>
+    <form method='POST' action='/gyms/{{gym._id}}/delete'>
+        <button class="btn btn-primary" type='submit'>Delete Gym</button>
+    </form>
+</p>
+
+<p><a href='/gyms/{{gym._id}}/edit'>Edit</a></p>
+
+
+<h2 class='mb-4 mt-4'>Climbs currently at {{gym.name}}</h2>
+{% for climb in climbs %}
+    {% include 'partials/route2.html' %}
+{% endfor %}
+
+{% endblock %}

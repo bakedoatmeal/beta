@@ -1,0 +1,18 @@
+<div class='card border-light mb-3 ml-3' style="max-width: 40rem; padding: 0">
+    <img src="{{ url_for('file', filename=climb['photo_video_name']) }}" style="width: 315px;">
+    <div class="card-body">{{climb.grade}} @ 
+        {% for gym in gyms %}
+            {% if gym._id == climb.gym %}
+                {{ gym.name}}
+            {% endif %}
+        {% endfor %}
+    
+       <p class='card-title'>Sent on {{climb.date}}</p>  
+    </div>
+    <div class='col-2'>
+        <form method='POST' action='/climbers/climbs/{{ climb._id }}' style="margin-bottom: 10px;">
+        <input type='hidden' value='{{ climber._id }}' name='climber_id'/>
+        <button class='btn btn-primary mb-2' type='submit'>Delete</button>
+        </form>
+    </div>
+</div>
