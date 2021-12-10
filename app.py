@@ -41,7 +41,7 @@ sample_climber = [{
 @app.route('/')
 def index():
     """Return homepage"""
-    return render_template('climbers_index.html', climbers=climbers.find(), gyms=gyms.find(), climbs=climbs.find())
+    return render_template('climbers_index.html', climbers=list(climbers.find()), gyms=list(gyms.find()), climbs=climbs.find())
 
 @app.route('/climbers/new')
 def climbers_new():
@@ -54,15 +54,15 @@ def gyms_new():
 @app.route('/climbers', methods=['POST'])
 def climbers_submit():
     """Submit a new climber."""
-    if 'photo-video' in request.files: 
-        photo_video = request.files['photo-video']
-        mongo.save_file(photo_video.filename, photo_video)
+    if 'profile-photo' in request.files: 
+        profile_photo = request.files['profile-photo']
+        mongo.save_file(profile_photo.filename, profile_photo)
     climber = {
         'username': request.form.get('username'),
         'fullname': request.form.get('fullname'),
         'level': request.form.get('level'),
         'homegym': request.form.get('homegym'),
-        'profile-photo': photo_video.filename
+        'profile-photo': profile_photo.filename
     }
     climbers.insert_one(climber)
     return redirect(url_for('index'))
@@ -106,6 +106,30 @@ def gyms_edit(gym_id):
     gym = gyms.find_one({'_id': ObjectId(gym_id)})
     return render_template('gyms_edit.html', gym = gym)
 
+@app.route('/climbers/<climber_id>/edit')
+def climbers_edit(climber_id):
+    climber = climbers.find_one({'_id': ObjectId(climber_id)})
+    return render_template('climbers_edit.html', climber = climber, gyms=gyms.find())
+
+@app.route('/climbers/<climber_id>', methods=['POST'])
+def climbers_update(climber_id):
+    """Update climber."""
+    if 'profile-photo' in request.files: 
+        profile_photo = request.files['profile-photo']
+        mongo.save_file(profile_photo.filename, profile_photo)
+    updated_climber = {
+        'username': request.form.get('username'),
+        'fullname': request.form.get('fullname'),
+        'level': request.form.get('level'),
+        'homegym': request.form.get('homegym'),
+        'profile-photo': profile_photo.filename
+    }
+    climbers.update_one(
+        {'_id': ObjectId(climber_id)},
+        {'$set': updated_climber}
+    )
+    return redirect(url_for('climbers_show', climber_id=climber_id))
+
 @app.route('/gyms/<gym_id>', methods=['POST'])
 def gyms_update(gym_id):
     updated_gym = {
@@ -137,9 +161,10 @@ def climbs_new():
     
     climb = {
         'gym': ObjectId(request.form.get('gym')),
-        'grade': request.form.get('grade'),
-        'date': request.form.get('date'), 
-        'climber_id': ObjectId(request.form.get('climber_id')),
+        'grade': int(request.form.get('grade')),
+        'date': request.form.get('date'),
+        'climber_id': ObjectId(request.form.get('climber_id')), 
+        'climber': climbers.find_one({'climber_id': ObjectId(request.form.get('climber_id'))}),
         'username': request.form.get('username'),
     }
     if 'photo-video' in request.files: 
@@ -147,6 +172,7 @@ def climbs_new():
         mongo.save_file(photo_video.filename, photo_video)
         climb['photo_video_name'] = photo_video.filename
     climbs.insert_one(climb)
+    print(climb)
     # return redirect(url_for('climbers_show', climber_id=request.form.get('climber_id')))
     return redirect(url_for('climbers_show', climber_id=request.form.get('climber_id')))
 

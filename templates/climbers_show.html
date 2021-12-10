@@ -13,13 +13,14 @@
             <p class="card-text">Home gym: {{ gym.name}}</p>
         {% endif %}
     {% endfor %}
+    <p><a href='/climbers/{{climber._id}}/edit'>Edit</a></p>
 
 </div>
 
 <h1 class='mx-auto mb-3'>Latest Sends (Completed Climbs)</h1> 
 <div class="row">
 {% for climb in climbs %}
-    {% include 'partials/route.html' %}
+    {% include 'partials/route2.html' %}
 {% endfor %}
 </div>
 
